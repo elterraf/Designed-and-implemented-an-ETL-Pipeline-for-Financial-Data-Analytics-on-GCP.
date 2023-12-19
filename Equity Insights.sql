@@ -29,8 +29,7 @@ END
   -- Price patterns: The high and low prices can contribute to the identification of various price patterns, such as double tops, double bottoms, head and shoulders patterns, and triangles.
   CASE
     WHEN high_price = low_price THEN 'Consolidation'
-    WHEN high_price > LAG(high_price) OVER (PARTITION BY Symbol ORDER BY date)
-  AND low_price > LAG(low_price) OVER (PARTITION BY Symbol ORDER BY date) THEN 'Uptrend Continuation'
+    WHEN high_price > LAG(high_price) OVER (PARTITION BY Symbol ORDER BY date) AND low_price > LAG(low_price) OVER (PARTITION BY Symbol ORDER BY date) THEN 'Uptrend Continuation'
     WHEN high_price < LAG(high_price) OVER (PARTITION BY Symbol ORDER BY date) AND low_price < LAG(low_price) OVER (PARTITION BY Symbol ORDER BY date) THEN 'Downtrend Continuation'
   ELSE
   'No Clear Pattern'
