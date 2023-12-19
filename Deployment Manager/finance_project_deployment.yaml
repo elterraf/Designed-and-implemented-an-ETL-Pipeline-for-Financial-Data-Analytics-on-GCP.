@@ -1,0 +1,15 @@
+imports:
+ - path: vm.jinja
+ - path: bigquery.jinja
+ - path: gcs.jinja
+
+resources:
+- name: vm
+  type: vm.jinja
+  properties:
+    zone: us-central1-a
+    machineType: n2-standard-4
+- name: gcs
+  type: gcs.jinja
+- name: bq
+  type: bigquery.jinja

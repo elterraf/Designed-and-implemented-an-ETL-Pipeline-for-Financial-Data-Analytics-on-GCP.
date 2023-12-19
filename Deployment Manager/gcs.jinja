@@ -1,0 +1,19 @@
+{% set INPUT_BUCKET_NAME = env['project'] + '-etl-input' %}
+{% set RESOURCES_BUCKET_NAME = env['project'] + '-etl-resources' %}
+
+resources:
+- type: gcp-types/storage-v1:buckets
+  name: {{ INPUT_BUCKET_NAME }}
+  properties:
+    predefinedAcl: projectPrivate
+    projection: full
+    location: US
+    storageClass: STANDARD
+
+- type: gcp-types/storage-v1:buckets
+  name: {{ RESOURCES_BUCKET_NAME }}
+  properties:
+    predefinedAcl: projectPrivate
+    projection: full
+    location: US
+    storageClass: STANDARD    

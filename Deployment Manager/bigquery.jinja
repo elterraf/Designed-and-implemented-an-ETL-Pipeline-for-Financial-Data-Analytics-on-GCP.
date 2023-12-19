@@ -1,0 +1,70 @@
+# Can't use deployment name as it is going to be filled in with a generated
+# name which has dashes in it, which are not valid bigquery name characters.
+{% set DATASET_NAME = (env['project'] + "-etl-dataset")|replace("-","_") %}
+{% set BQ_TABLE_NAME = "financial_data" %}
+
+
+resources:
+# Dataset Resource
+- name: {{ DATASET_NAME }}
+  type: gcp-types/bigquery-v2:datasets
+  properties:
+    datasetReference:
+      datasetId: {{ DATASET_NAME }}
+      description: The {{ DATASET_NAME }} dataset contains all the tables for bq etl pipeline.
+      location: US
+
+# Employee Table
+- name: {{ BQ_TABLE_NAME }}
+  type: gcp-types/bigquery-v2:tables
+  properties:
+    datasetId: $(ref.{{ DATASET_NAME }}.datasetReference.datasetId)
+    tableReference:
+      tableId: {{ BQ_TABLE_NAME }}
+    schema:
+          fields:
+          - name: id
+            type: INTEGER
+            mode: NULLABLE
+          - name: Symbol
+            type: STRING
+            mode: NULLABLE
+          - name: Date
+            type: date
+            mode: NULLABLE
+          - name: Open_Price
+            type: FLOAT
+            mode: NULLABLE
+          - name: High_Price
+            type: FLOAT
+            mode: NULLABLE
+          - name: Low_Price
+            type: FLOAT
+            mode: NULLABLE
+          - name: Close_Price
+            type: FLOAT
+            mode: NULLABLE
+          - name: WAP
+            type: FLOAT
+            mode: NULLABLE
+          - name: No_of_Shares
+            type: INTEGER
+            mode: NULLABLE
+          - name: No_of_Trades
+            type: INTEGER
+            mode: NULLABLE
+          - name: Total_Turnover
+            type: FLOAT
+            mode: NULLABLE
+          - name: Deliverable_Quantity
+            type: INTEGER
+            mode: NULLABLE
+          - name: Percentage_Deli_Qty_to_Traded_Qty
+            type: FLOAT
+            mode: NULLABLE
+          - name: Spread_High_Low
+            type: FLOAT
+            mode: NULLABLE
+          - name: Spread_Close_Open
+            type: FLOAT
+            mode: NULLABLE
