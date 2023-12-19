@@ -1,7 +1,6 @@
 create or replace  view `dataflow-stockdata.dataflow_stockdata_dataset.view_equity_insights`
 as
-SELECT
-  *,
+SELECT *,
   -- Market sentiment: The relationship between the open and close prices can provide insights into market sentiment.
   CASE
     WHEN close_price > open_price THEN 'Positive Market Sentiment'
