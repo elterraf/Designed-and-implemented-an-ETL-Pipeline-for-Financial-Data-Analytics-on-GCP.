@@ -21,8 +21,7 @@ END
   -- Trend identification: Analyzing the high and low prices over multiple trading periods can help identify trends in the stock's price movement.
   CASE
     WHEN low_price < LAG(low_price) OVER (PARTITION BY symbol ORDER BY date) AND high_price < LAG(high_price) OVER (PARTITION BY symbol ORDER BY date) THEN 'Downward Trend'
-    WHEN low_price > LAG(low_price) OVER (PARTITION BY symbol ORDER BY date)
-  AND high_price > LAG(high_price) OVER (PARTITION BY symbol ORDER BY date) THEN 'Upward Trend'
+    WHEN low_price > LAG(low_price) OVER (PARTITION BY symbol ORDER BY date) AND high_price > LAG(high_price) OVER (PARTITION BY symbol ORDER BY date) THEN 'Upward Trend'
   ELSE
   'No Clear Trend'
 END
